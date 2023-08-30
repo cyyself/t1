@@ -552,11 +552,8 @@ trait VectorSubsystem
         "--split-verilog",
         "--strip-debug-info",
         "--preserve-values=none",
-        "--preserve-aggregate=all",
         "--disable-annotation-unknown",
-        "--output-annotation-file=mfc.anno.json",
-        "--repl-seq-mem",
-        "--repl-seq-mem-file=repl-seq-mem.txt"
+        "--output-annotation-file=mfc.anno.json"
       )
     ).call(T.dest)
     PathRef(T.dest)
