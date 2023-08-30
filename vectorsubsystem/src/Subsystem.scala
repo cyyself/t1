@@ -15,7 +15,7 @@ class VerdesConfig
         beatBytes = site(MemoryBusKey).beatBytes,
         idBits = 4), 1))
     })
-      .orElse(new WithBootROMFile("./dependencies/rocket-chip/bootrom/bootrom.img"))
+      .orElse(new WithBootROMFile("./emulator/workload/bootrom/bootrom.img"))
       .orElse(new WithClockGateModel("./dependencies/rocket-chip/src/vsrc/EICG_wrapper.v"))
       .orElse(new WithNoSimulationTimeout)
       .orElse(new WithScratchpadsBaseAddress(BigInt("3000000", 16)))
