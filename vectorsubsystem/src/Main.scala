@@ -30,6 +30,7 @@ object Main {
         case a => Some(a)
       }
     os.write(os.Path(dir) / s"$topName.anno.json", firrtl.annotations.JsonProtocol.serialize(annos))
+    freechips.rocketchip.util.ElaborationArtefacts.files.foreach { case (ext, contents) => os.write.over(os.Path(dir) / s"${p.toString}.${ext}", contents()) }
   }
 
   def main(args: Array[String]): Unit = ParserForMethods(this).runOrExit(args)
