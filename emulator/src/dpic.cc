@@ -62,7 +62,32 @@ extern "C" void AXI4BFMDPI(
     OUT svBitVecVal* bresp,
     OUT svLogic* bvalid,
     IN  svLogic bready) {
+
+    // CTRL START {
+    mem_xbar.beat(mem_sigs_ref);
+    // CTRL  END  }
     
+    // output ar
+    *arready = mem_sigs.arready;
+
+    // output r
+    *rid    = mem_sigs.rid;
+    *rdata  = mem_sigs.rdata;
+    *rlast  = mem_sigs.rlast;
+    *rresp  = mem_sigs.rresp;
+    *rvalid = mem_sigs.rvalid;
+
+    // output aw
+    *awready= mem_sigs.awready;
+
+    // output w
+    *wready = mem_sigs.wready;
+
+    // output b
+    *bid    = mem_sigs.bid;
+    *bresp  = mem_sigs.bresp;
+    *bvalid = mem_sigs.bvalid;
+
     // input ar
     mem_sigs.arid   = *arid;
     mem_sigs.araddr = *araddr;
@@ -90,29 +115,4 @@ extern "C" void AXI4BFMDPI(
     
     // input b
     mem_sigs.bready = bready;
-
-    // CTRL START {
-    mem_xbar.beat(mem_sigs_ref);
-    // CTRL  END  }
-    
-    // output ar
-    *arready = mem_sigs.arready;
-
-    // output r
-    *rid    = mem_sigs.rid;
-    *rdata  = mem_sigs.rdata;
-    *rlast  = mem_sigs.rlast;
-    *rresp  = mem_sigs.rresp;
-    *rvalid = mem_sigs.rvalid;
-
-    // output aw
-    *awready= mem_sigs.awready;
-
-    // output w
-    *wready = mem_sigs.wready;
-
-    // output b
-    *bid    = mem_sigs.bid;
-    *bresp  = mem_sigs.bresp;
-    *bvalid = mem_sigs.bvalid;
 }
