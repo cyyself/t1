@@ -32,5 +32,9 @@ class TestHarness(implicit val p: Parameters) extends RawModule {
       mem.io_axi4.head <> io
       mem
     }.toSeq
+
+    ldut.mmio_axi4.zip(ldut.mmioAXI4Node.in).map { case (io, (_, edge)) =>
+      io <> DontCare
+    }.toSeq
   }
 }
