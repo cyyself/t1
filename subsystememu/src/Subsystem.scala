@@ -1,6 +1,7 @@
 package verdes
 
 import chisel3._
+import freechips.rocketchip.amba.axi4.AXI4SlavePortParameters
 import freechips.rocketchip.devices.debug.HasPeripheryDebug
 import freechips.rocketchip.diplomacy.{BundleBridgeSource, InModuleBody}
 import freechips.rocketchip.subsystem._
@@ -31,6 +32,8 @@ class VerdesConfig
       // SoC
       .orElse(new WithoutTLMonitors)
       .orElse(new WithDefaultMemPort)
+      .orElse(new WithDefaultMMIOPort)
+      .orElse(new WithNExtTopInterrupts(1))
       .orElse(new WithDebugSBA)
       // 1 MHz
       .orElse(new WithTimebase(BigInt(1000000)))
@@ -42,7 +45,9 @@ class VerdesConfig
 class VerdesSystem(implicit p: Parameters) extends BaseSubsystem
   with HasRocketTiles
   with HasPeripheryDebug
-  with CanHaveMasterAXI4MemPort {
+  with CanHaveMasterAXI4MemPort
+  with CanHaveMasterAXI4MMIOPort
+  with HasExtInterrupts {
   // configure
   val resetVectorSourceNode = BundleBridgeSource[UInt]()
   tileResetVectorNexusNode := resetVectorSourceNode
