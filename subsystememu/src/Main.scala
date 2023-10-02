@@ -6,6 +6,7 @@ import firrtl.AnnotationSeq
 import firrtl.options.TargetDirAnnotation
 import freechips.rocketchip.diplomacy.LazyModule
 import mainargs._
+import verdes.fpga._
 
 object Main {
   @main def elaborate(@arg(name = "dir", doc = "output directory") dir: String) = {
@@ -17,7 +18,7 @@ object Main {
     ).foldLeft(
         Seq(
           TargetDirAnnotation(dir),
-          ChiselGeneratorAnnotation(() => new TestHarness)
+          ChiselGeneratorAnnotation(() => new FPGAHarness())
         ): AnnotationSeq
       ) { case (annos, phase) => phase.transform(annos) }
       .flatMap {
@@ -30,6 +31,7 @@ object Main {
         case a => Some(a)
       }
     os.write(os.Path(dir) / s"$topName.anno.json", firrtl.annotations.JsonProtocol.serialize(annos))
+    freechips.rocketchip.util.ElaborationArtefacts.files.foreach { case (ext, contents) => os.write.over(os.Path(dir) / s"${p.toString}.${ext}", contents()) }
   }
 
   def main(args: Array[String]): Unit = ParserForMethods(this).runOrExit(args)
