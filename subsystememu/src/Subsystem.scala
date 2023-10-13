@@ -47,7 +47,7 @@ class VerdesSystem(implicit p: Parameters) extends BaseSubsystem
   with HasPeripheryDebug
   with CanHaveMasterAXI4MemPort
   with CanHaveMasterAXI4MMIOPort
-  with HasExtInterrupts {
+  with HasAsyncExtInterrupts {
   // configure
   val resetVectorSourceNode = BundleBridgeSource[UInt]()
   tileResetVectorNexusNode := resetVectorSourceNode
@@ -58,4 +58,5 @@ class VerdesSystem(implicit p: Parameters) extends BaseSubsystem
 class VerdesSystemModuleImp[+L <: VerdesSystem](_outer: L) extends BaseSubsystemModuleImp(_outer)
   with HasTilesModuleImp
   with HasRTCModuleImp
+  with HasExtInterruptsModuleImp
   with DontTouch

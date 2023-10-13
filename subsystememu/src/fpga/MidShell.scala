@@ -238,6 +238,8 @@ class MidShell(implicit val p: Parameters) extends Module {
       mmio_axi4_io <> axiltoaxi.io.axi
     }.toSeq
 
+    dut.interrupts := dutUART.io.irq
+
     // MMIO Debug
     when(axiltoaxi.io.axi.ar.fire) {
       lastMMIORead := axiltoaxi.io.axi.ar.bits.addr
@@ -251,7 +253,5 @@ class MidShell(implicit val p: Parameters) extends Module {
         hasMMIOError := true.B
       }
     }
-
-    // TODO: connect interrupt
   }
 }
